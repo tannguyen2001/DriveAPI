@@ -1,22 +1,36 @@
-﻿using Dapper;
-using Drive.Model;
+﻿using Drive.Core.Interfaces;
+using Drive.Infrastructure.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
 
-namespace Drive.Controllers
+namespace Drive.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetAllUsers()
+        IUserRepository _repository;
+        public UserController(IUserRepository repository)
         {
-            string connectionString = "Data Source=DESKTOP-FFQCPU7\\TAN;Initial Catalog=Drive;Integrated Security=True";
-            var sqlConnection = new SqlConnection(connectionString);
-            var Users = sqlConnection.Query<User>("select id as 'ID', username as 'UserName', password as 'Password' , full_name as 'FullName'  from Account;").ToList();
-            return Ok(Users);
+            _repository = repository;
+        }
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                var users = _repository.GetAll();
+                return Ok(users);
+            }
+            catch(Exception ex)
+            {
+                var res = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = "Có lỗi sảy ra, xin vui lòng thử lại"
+                };
+                return StatusCode(500, res);
+            }
         }
     }
 }

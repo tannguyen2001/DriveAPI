@@ -1,4 +1,4 @@
-﻿namespace Drive.Model
+﻿namespace Drive.Core.Entities
 {
     public class FileShare
     {
