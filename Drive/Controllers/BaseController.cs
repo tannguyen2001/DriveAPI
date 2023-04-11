@@ -17,12 +17,12 @@ namespace Drive.API.Controllers
             _repository = repository;
             _service = service;
         }
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_repository.GetAll());
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetByID(int id)
         {
             return Ok(_repository.GetByID(id));

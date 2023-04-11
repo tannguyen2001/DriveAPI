@@ -27,7 +27,7 @@ namespace Drive.Infrastructure.Repository
         {
             if (string.IsNullOrEmpty(storeName))
             {
-                storeName = $"Proc_Get{_className}s";
+                storeName = $"Proc_GetAll{_className}s";
             }
             var entities = SqlConnection.Query<Entity>(storeName, commandType: System.Data.CommandType.StoredProcedure);
             return entities;
