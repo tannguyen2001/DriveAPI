@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Drive.Core.Interfaces
+namespace Drive.Core.Interfaces.Service
 {
     /// <summary>
     /// Nghiệp vụ, kiểm tra, validate ...
     /// </summary>
-    public interface IUserSevice
+    public interface IUserSevice:IBaseService<User>
     {
-        int InsertService(User user);
-        int UpdateService(User user);
     }
 }

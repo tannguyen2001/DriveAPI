@@ -1,4 +1,7 @@
-﻿using Drive.Core.Interfaces;
+﻿using Drive.Core.Entities;
+using Drive.Core.Exceptions;
+using Drive.Core.Interfaces.Repository;
+using Drive.Core.Interfaces.Service;
 using Drive.Infrastructure.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,30 +10,14 @@ namespace Drive.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController<User>
     {
         IUserRepository _repository;
-        public UserController(IUserRepository repository)
+        IUserSevice _sevice;
+        public UserController(IUserRepository repository, IUserSevice sevice):base(repository,sevice)
         {
             _repository = repository;
-        }
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            try
-            {
-                var users = _repository.GetAll();
-                return Ok(users);
-            }
-            catch(Exception ex)
-            {
-                var res = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = "Có lỗi sảy ra, xin vui lòng thử lại"
-                };
-                return StatusCode(500, res);
-            }
+            _sevice = sevice;
         }
     }
 }

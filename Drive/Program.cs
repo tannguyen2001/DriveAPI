@@ -1,4 +1,7 @@
-using Drive.Core.Interfaces;
+using Drive.Core.Exceptions;
+using Drive.Core.Interfaces.Repository;
+using Drive.Core.Interfaces.Service;
+using Drive.Core.Services;
 using Drive.Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,10 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<HttpResponseExceptionFilter>();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserSevice, UserService>();
 
 var app = builder.Build();
 
