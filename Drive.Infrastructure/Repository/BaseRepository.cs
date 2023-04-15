@@ -21,7 +21,7 @@ namespace Drive.Infrastructure.Repository
             SqlConnection = new SqlConnection(ConnectionString);
             _className = typeof(Entity).Name;
         }
-        public virtual IEnumerable<Entity> GetAll() => this.GetAll(null);
+        public IEnumerable<Entity> GetAll() => this.GetAll(null);
 
         public virtual IEnumerable<Entity> GetAll(string? storeName)
         {

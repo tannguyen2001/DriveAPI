@@ -24,7 +24,7 @@ namespace Drive.Core.Services
 
         protected override bool Validate(User user)
         {
-            if (string.IsNullOrEmpty(user.UserName))
+            if (string.IsNullOrEmpty(user.Username))
             {
                 ErrorValidateMsgs.Add("Tên tài khoản không được để trống!");
             }
@@ -37,7 +37,7 @@ namespace Drive.Core.Services
                 ErrorValidateMsgs.Add("Tên người dùng không được phép để trống!");
             }
             // tồn tại tên tài khoản
-            var isExits = _userRepository.CheckUserExits(user.UserName);
+            var isExits = _userRepository.CheckUserExits(user.Username);
             if (isExits)
             {
                 ErrorValidateMsgs.Add("Tên tài khoản đã tồn tại, vui lòng đăng ký với tên tài khoản khác!");

@@ -15,11 +15,11 @@ namespace Drive.Infrastructure.Repository
     {
         public UserRepository(IConfiguration configuration):base(configuration){}
 
-        public bool CheckUserExits(string userName)
+        public bool CheckUserExits(string username)
         {
-            var sqlQuery = "select * from Account where user_name = @UserName";
+            var sqlQuery = "SELECT * FROM Users WHERE username = @Username";
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@UserName", userName);
+            parameters.Add("@Username", username);
             var userExits = SqlConnection.QueryFirstOrDefault(sqlQuery, param: parameters);
             if(userExits != null)
             {

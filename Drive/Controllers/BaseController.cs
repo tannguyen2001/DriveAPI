@@ -18,17 +18,17 @@ namespace Drive.API.Controllers
             _service = service;
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public virtual IActionResult GetAll()
         {
             return Ok(_repository.GetAll());
         }
         [HttpGet("{id}")]
-        public IActionResult GetByID(int id)
+        public virtual IActionResult GetByID(int id)
         {
             return Ok(_repository.GetByID(id));
         }
         [HttpPost]
-        public IActionResult Insert(Entity entity)
+        public virtual IActionResult Insert(Entity entity)
         {
             return Ok(_service.InsertService(entity));
         }
