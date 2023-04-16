@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Drive.Infrastructure\Drive.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FilesUploaded\" />
+  </ItemGroup>
+
 </Project>

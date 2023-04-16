@@ -13,10 +13,12 @@ namespace Drive.API.Controllers
     {
         IFileRepository _repository;
         IFileService _service;
-        public FileController(IFileRepository repository, IFileService service):base(repository,service)
+        private readonly IWebHostEnvironment _env;
+        public FileController(IFileRepository repository, IFileService service,IWebHostEnvironment env):base(repository,service)
         {
             _repository = repository;
             _service = service;
+            _env = env;
         }
         [HttpGet]
         public override IActionResult GetAll()
@@ -24,5 +26,27 @@ namespace Drive.API.Controllers
             // Code xử lý tùy ý
             return Ok(_repository.GetAll());
         }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload([FromForm]FileUsing file)
+        {
+            var uploadsDir = Path.Combine(_env.ContentRootPath, "uploads");
+            var filePath = Path.Combine(uploadsDir, file.FileProperty.FileName);
+            var destFilePath = Path.Combine(uploadsDir, file.FileProperty.FileName + file.FileProperty.UserID + file.FileProperty.CreatedAt);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+               System.IO.File.Copy(filePath, destFilePath);
+            }
+            return this.Insert(file.FileProperty);
+        }
+
+        [HttpGet("getfile/{id}")]
+        public IActionResult GetFile(int id)
+        {
+            return Ok();
+        }
+
+
     }
 }
