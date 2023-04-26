@@ -27,25 +27,12 @@ namespace Drive.API.Controllers
             return Ok(_repository.GetAll());
         }
 
-        [HttpPost("upload")]
-        public async Task<IActionResult> Upload([FromForm]FileUsing file)
+        [HttpGet("search")]
+        public IActionResult GetBySearch(string? key="")
         {
-            var uploadsDir = Path.Combine(_env.ContentRootPath, "uploads");
-            var filePath = Path.Combine(uploadsDir, file.FileProperty.FileName);
-            var destFilePath = Path.Combine(uploadsDir, file.FileProperty.FileName + file.FileProperty.UserID + file.FileProperty.CreatedAt);
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-               System.IO.File.Copy(filePath, destFilePath);
-            }
-            return this.Insert(file.FileProperty);
+            return Ok(_repository.GetBySearch(key));
         }
 
-        [HttpGet("getfile/{id}")]
-        public IActionResult GetFile(int id)
-        {
-            return Ok();
-        }
 
 
     }
