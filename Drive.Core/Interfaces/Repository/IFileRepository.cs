@@ -11,5 +11,6 @@ namespace Drive.Core.Interfaces.Repository
     public interface IFileRepository:IBaseRepository<File>
     {
         IEnumerable<File> GetBySearch(string key);
+        int DeleteFileByID(int ID);
     }
 }

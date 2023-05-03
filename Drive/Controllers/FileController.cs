@@ -33,7 +33,35 @@ namespace Drive.API.Controllers
             return Ok(_repository.GetBySearch(key));
         }
 
+        public override IActionResult GetByID(int id)
+        {
+            var file = _repository.GetByID(id);
+            if (!System.IO.File.Exists(file.FilePath))
+            {
+                return NotFound();
+            }
+            // Lấy tên file và đọc nội dung tệp tin
+            var fileBytes = System.IO.File.ReadAllBytes(file.FilePath);
+            var fileName = Path.GetFileName(file.FilePath);
 
+            // Trả về nội dung tệp tin dưới dạng FileContentResult
+            return File(fileBytes, "application/vnd.ms-excel", fileName);
+
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteFileByID([FromQuery] int id)
+        {
+            return Ok(_repository.DeleteFileByID(id));
+        }
+
+        public override IActionResult Insert(File entity)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory; // Lấy đường dẫn đến thư mục chứa file thực thi ứng dụng
+            string filesUploadedPath = Path.Combine(path, "FilesUploaded"); // Kết hợp đường dẫn với tên thư mục "FilesUploaded"
+            System.IO.File.Copy(entity.FilePath,filesUploadedPath + "/"+ entity.FileName );
+            return base.Insert(entity);
+        }
 
     }
 }

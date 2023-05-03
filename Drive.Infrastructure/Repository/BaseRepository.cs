@@ -39,10 +39,10 @@ namespace Drive.Infrastructure.Repository
         /// <returns></returns>
         public virtual Entity GetByID(int id)
         {
-            var sql = $"select * from {_className} where {_className}Id = @{_className}Id";
+            var sql = $"Proc_GetFileByID";
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add($"@{_className}Id", id);
-            var entity = SqlConnection.QueryFirstOrDefault<Entity>(sql, param: parameters);
+            parameters.Add($"@ID", id);
+            var entity = SqlConnection.QueryFirstOrDefault<Entity>(sql, param: parameters, commandType: System.Data.CommandType.StoredProcedure);
             return entity;
         }
 

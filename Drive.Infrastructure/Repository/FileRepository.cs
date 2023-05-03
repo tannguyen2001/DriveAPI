@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Drive.Core.Entities;
 using Drive.Core.Interfaces.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
@@ -32,6 +33,14 @@ namespace Drive.Infrastructure.Repository
             return files;
         }
 
+        public int DeleteFileByID(int ID)
+        {
+            var store = $"Proc_DeleteFileByID";
+            DynamicParameters dynParameters = new DynamicParameters();
+            dynParameters.Add("@ID", ID);
+            int res = SqlConnection.Execute(store,param:dynParameters,commandType:System.Data.CommandType.StoredProcedure);
+            return res;
+        }
         public override int Insert(File entity)
         {
             return base.Insert(entity);
