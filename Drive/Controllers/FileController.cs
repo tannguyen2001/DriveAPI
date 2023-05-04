@@ -59,7 +59,7 @@ namespace Drive.API.Controllers
         {
             string path = AppDomain.CurrentDomain.BaseDirectory; // Lấy đường dẫn đến thư mục chứa file thực thi ứng dụng
             string filesUploadedPath = Path.Combine(path, "FilesUploaded"); // Kết hợp đường dẫn với tên thư mục "FilesUploaded"
-            System.IO.File.Copy(entity.FilePath,filesUploadedPath + "/"+ entity.FileName );
+            System.IO.File.Copy(entity.FilePath,filesUploadedPath + "/"+ entity.FileName,true );
             return base.Insert(entity);
         }
 
